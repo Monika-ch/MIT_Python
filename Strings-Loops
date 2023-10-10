@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep  8 22:36:19 2023
+
+@author: monika
+"""
+
+        
+# longest substring in alphabetical order
+s= "abcbcd"
+
+longestsubstr = ""
+start = 0
+end = len(s)
+
+while start < end - 1:
+    substr = ""    
+    for char in range(start, end):     
+        if len(substr) != 0:
+            if s[char] >= substr[-1]:
+                substr += s[char]
+                print(substr, char)
+            else:
+                break
+        else:
+            substr = s[char]
+    print(char, end)
+    start = char    
+    if len(substr) > len(longestsubstr):
+        longestsubstr = substr
+if end == 1:
+    print(s)
+else:
+    print(longestsubstr)
+    
+    
+    
+#Loops and string/substrings
+
+an_letters = "aefhilmnorsxAEFHILMNORSX"
+
+word = input("I will cheer for you! Enter a word: ")
+times = int(input("Enthusiasm level (!-10): "))
+i = 0
+
+while i < len(word):
+    char = word[i]
+    if char in an_letters:
+        print("Give me an", char, "!", char)
+    else: 
+        print("Give me a", char, "!", char)
+    i+=1
+print("What does it spell?")
+for i in range(times):
+    print(word, "!!!")
