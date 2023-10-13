@@ -90,6 +90,7 @@ def compPlayHand(hand, wordList, n):
                 totalScore += score
                 print('"' + word + '" earned ' + str(score) + ' points. Total: ' + str(totalScore) + ' points')              
                 # Update hand and show the updated hand to the user
+               
                 hand = updateHand(hand, word)
                 print()
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
@@ -124,9 +125,39 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this when you code this function
-
+    
+    def isUserOrComp(hand):
+        userOrComp = ""
+        while True:
+            userOrComp = input("Enter u to have yourself play, c to have the computer play: ")
+            if userOrComp == 'u':
+                playHand(hand, wordList, HAND_SIZE)
+                break
+            elif userOrComp == 'c':
+                compPlayHand(hand, wordList, HAND_SIZE)
+                break
+            else:
+                print("Invalid command.")
+    
+    keyedInput = ""
+    hand = {}
+    while keyedInput != 'e':
+        keyedInput = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+        
+        if keyedInput == 'n':
+            hand = dealHand(HAND_SIZE)
+            isUserOrComp(hand)
+        elif keyedInput == 'r':
+            if len(hand) > 0:
+                isUserOrComp(hand)
+            else:    
+                print("You have not played a hand yet. Please play a new hand first!")
+                print()
+        elif keyedInput == 'e':
+            # exit the game
+            return
+        else:
+            print("Invalid command.")
         
 #
 # Build data structures used for entire session and play game
