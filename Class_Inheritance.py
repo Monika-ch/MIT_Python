@@ -88,7 +88,9 @@ class MITPerson(Person):
         return self.idNum < other.idNum
     
     def speak(self, utterance):
-        return (self.getLastName() + " says: " + utterance)
+        #return (self.getLastName() + " says: " + utterance)
+        # or change MIT person's speak method to -
+        return (self.name + " says: " + utterance)
     
 
 m3 = MITPerson('Mark Zuckerberg')
@@ -128,7 +130,66 @@ p2 = MITPerson('John') #idNum will 1
 p3 = MITPerson('John') #idNum will 2
 p4 = Person('John') # NO idNum on Person class
 print("p1 < p2 =", p1 < p2)
+print("p1 < p4 = throws Attribute error because there is no idNum on Person")
 #print("p1 < p4 =", p1 < p4) #uncomment and test it out
-print("p4 < p1 =", p4 < p1)
+print("while p4 < p1 =", p4 < p1)
+print("_________________________________")
+print()
+
+# Substitution Principle
+class Student(MITPerson):
+    pass
+
+class UG(Student):
+    def __init__(self, name, classYear):
+        MITPerson.__init__(self, name)
+        self.year = classYear
+        
+    def getClass(self):
+        return self.year
+    
+    def speak(self, utterance):
+        return MITPerson.speak(self, "Dude, " + utterance)
+    
+class Grad(Student):
+    pass
+    
+class TransferStudent(Student):
+    pass
+
+def isStudent(obj):
+    return isinstance(obj, Student)
+
+s1 = UG('Matt Damon', 2017)
+s2 = UG('Ben Affleck', 2017)
+s3 = UG('Lin Manuel Miranda', 2018)
+s4 = Grad('Leonardo di Caprio')
+s5 = TransferStudent('Robert deNiro')
+
+print("s1 =", s1)
+print("s1.getClass() =", s1.getClass())
+print("s1.speak('where is the quiz?') =", s1.speak('where is the quiz?'))
+print("s2.speak('I have no clue!') =", s1.speak('I have no clue!'))
+print("s4 =", s4)
+print("_________________________________")
+print()
+
+class Professor(MITPerson):
+    def __init__(self, name, department):
+        MITPerson.__init__(self, name)
+        self.department = department
+    def speak(self, utterance):
+        newUtterance = 'In course ' + self.department + ' we say '
+        return MITPerson.speak(self, newUtterance + utterance)
+    def lecture(self, topic):
+        return self.speak('it is obvious that ' + topic)
+    
+faculty = Professor('Doctor Arrogant', 'six')
+print("faculty =", faculty)
+print("m1.speak('hi there') =>", m1.speak('hi there'))
+print("s1.speak('hi there') =>", s1.speak('hi there'))
+print("faculty.speak('hi there') =>", faculty.speak('hi there'))
+print("faculty.lecture('hi there') =>", faculty.lecture('hi there'))
+
 print("__")
 print()
